@@ -20,7 +20,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="mt-20 border-t border-brand-500/10 bg-slate-50/50 py-16 dark:bg-neutral-950/20">
+    <footer className="mt-20 bg-card py-16">
       <Container>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
 
@@ -102,7 +102,7 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="flex-1 rounded-xl border border-brand-500/20 bg-background/50 px-3.5 py-2 text-sm outline-none focus:border-brand-500"
+                className="flex-1 rounded-xl border border-card-border bg-background px-3.5 py-2 text-sm outline-none focus:border-brand-500"
               />
               <button
                 type="submit"

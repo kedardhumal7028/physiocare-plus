@@ -1,130 +1,176 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ═══════════════════════════════════════════════
+   LIGHT MODE — CSS Design Tokens
+═══════════════════════════════════════════════ */
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background:       #f8fafc;
+  --foreground:       #0f172a;
 
-  --brand-50: #eff6ff;
-  --brand-100: #dbeafe;
-  --brand-500: #0b469a;
-  /* Premium Deep Blue from Reference Design */
-  --brand-600: #08377a;
-  --brand-900: #052454;
+  --brand-50:         #eff6ff;
+  --brand-100:        #dbeafe;
+  --brand-500:        #0b469a;
+  --brand-600:        #08377a;
+  --brand-900:        #052454;
 
-  --accent-50: #f0f9ff;
-  --accent-500: #0284c7;
-  --accent-600: #0369a1;
+  --accent-50:        #f0f9ff;
+  --accent-500:       #0284c7;
+  --accent-600:       #0369a1;
 
-  --card-background: #ffffff;
-  --card-border: #e2e8f0;
-  --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 8px -1px rgba(15, 23, 42, 0.03);
+  --card-background:  #ffffff;
+  --card-border:      #e2e8f0;
+  --card-shadow:      0 4px 20px -2px rgba(15,23,42,0.06), 0 2px 8px -1px rgba(15,23,42,0.03);
+
+  --nav-bg:           rgba(255,255,255,0.95);
+  --nav-border:       rgba(226,232,240,0.8);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #090d16;
-    --foreground: #f8fafc;
+/* ═══════════════════════════════════════════════
+   DARK MODE — triggered by .dark class on <html>
+═══════════════════════════════════════════════ */
+.dark {
+  --background:       #0a0f1e;
+  --foreground:       #e8edf5;
 
-    --brand-50: #071e3d;
-    --brand-100: #0b2e5c;
-    --brand-500: #3b82f6;
-    --brand-600: #2563eb;
-    --brand-900: #1d4ed8;
+  --brand-50:         #071e3d;
+  --brand-100:        #0b2e5c;
+  --brand-500:        #4f8ef7;
+  --brand-600:        #2563eb;
+  --brand-900:        #1d4ed8;
 
-    --accent-50: #082f49;
-    --accent-500: #0ea5e9;
-    --accent-600: #0284c7;
+  --accent-50:        #082f49;
+  --accent-500:       #38bdf8;
+  --accent-600:       #0284c7;
 
-    --card-background: #0f1626;
-    --card-border: #1e293b;
-    --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3), 0 2px 8px -1px rgba(0, 0, 0, 0.2);
-  }
+  --card-background:  #111827;
+  --card-border:      rgba(255,255,255,0.08);
+  --card-shadow:      0 4px 24px -2px rgba(0,0,0,0.5), 0 2px 8px -1px rgba(0,0,0,0.4);
+
+  --nav-bg:           rgba(10,15,30,0.96);
+  --nav-border:       rgba(255,255,255,0.07);
 }
 
+/* ═══════════════════════════════════════════════
+   TAILWIND THEME TOKENS
+═══════════════════════════════════════════════ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background:   var(--background);
+  --color-foreground:   var(--foreground);
 
-  --color-brand-50: var(--brand-50);
-  --color-brand-100: var(--brand-100);
-  --color-brand-500: var(--brand-500);
-  --color-brand-600: var(--brand-600);
-  --color-brand-900: var(--brand-900);
+  --color-brand-50:     var(--brand-50);
+  --color-brand-100:    var(--brand-100);
+  --color-brand-500:    var(--brand-500);
+  --color-brand-600:    var(--brand-600);
+  --color-brand-900:    var(--brand-900);
 
-  --color-accent-50: var(--accent-50);
-  --color-accent-500: var(--accent-500);
-  --color-accent-600: var(--accent-600);
+  --color-accent-50:    var(--accent-50);
+  --color-accent-500:   var(--accent-500);
+  --color-accent-600:   var(--accent-600);
 
-  --font-sans: 'Outfit', 'Inter', var(--font-geist-sans), sans-serif;
-  --font-mono: var(--font-geist-mono);
-
-  --shadow-glass: var(--card-shadow);
+  --font-sans:          'Outfit', 'Inter', sans-serif;
+  --shadow-glass:       var(--card-shadow);
 }
 
-/* Base Body Styles */
+/* ═══════════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════════ */
+html { scroll-behavior: smooth; }
+
 body {
   background-color: var(--background);
-  color: var(--foreground);
-  font-family: 'Outfit', 'Inter', sans-serif;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
+  color:            var(--foreground);
+  font-family:      'Outfit', 'Inter', sans-serif;
+  overflow-x:       hidden;
+  transition:       background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Elegant Card styling matching reference */
+/* ── Dark mode smooth transition for all elements ── */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+/* But DON'T transition transforms, opacity (breaks animations) */
+*:where([class*="hover:"]):hover {
+  transition-duration: 0.15s;
+}
+
+/* ═══════════════════════════════════════════════
+   GLASS CARD
+═══════════════════════════════════════════════ */
 .glass-card {
-  background: var(--card-background);
-  border: 1px solid var(--card-border);
-  box-shadow: var(--card-shadow);
+  background:    var(--card-background);
+  border:        1px solid var(--card-border);
+  box-shadow:    var(--card-shadow);
   border-radius: 1rem;
 }
 
+/* ═══════════════════════════════════════════════
+   GRADIENT TEXT
+═══════════════════════════════════════════════ */
 .text-gradient {
-  background: linear-gradient(to right, var(--brand-500), var(--accent-500));
+  background:              linear-gradient(135deg, var(--brand-500), var(--accent-500));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
+  background-clip:         text;
 }
 
-/* Modern Scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* ═══════════════════════════════════════════════
+   NAV LINK HOVER — animated underline
+═══════════════════════════════════════════════ */
+.nav-link {
+  position:        relative;
+  padding-bottom:  2px;
+}
+.nav-link::after {
+  content:          '';
+  position:         absolute;
+  bottom:           -2px;
+  left:             50%;
+  transform:        translateX(-50%) scaleX(0);
+  transform-origin: center;
+  width:            100%;
+  height:           2px;
+  border-radius:    2px;
+  background:       var(--brand-500);
+  transition:       transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: translateX(-50%) scaleX(1);
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+/* ═══════════════════════════════════════════════
+   SCROLLBARS
+═══════════════════════════════════════════════ */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--card-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-500); }
 
-::-webkit-scrollbar-thumb {
-  background: var(--card-border);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-500);
-}
-
-/* Soft Animations */
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════ */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
-}
+.animate-fade-in    { animation: fadeIn    0.35s ease-out forwards; }
+.animate-slide-down { animation: slideDown 0.2s  ease-out forwards; }
 
-/* Unified body grid overlays for high-fidelity clinical grids */
+/* ═══════════════════════════════════════════════
+   GRID OVERLAY
+═══════════════════════════════════════════════ */
 .bg-grid-pattern {
-  background-size: 60px 60px;
+  background-size:  60px 60px;
   background-image:
-    linear-gradient(to right, rgba(148, 163, 184, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.03) 1px, transparent 1px);
+    linear-gradient(to right,  rgba(148,163,184,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148,163,184,0.04) 1px, transparent 1px);
 }

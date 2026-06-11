@@ -47,37 +47,41 @@ export default function AdminDashboardOverview() {
   ];
 
   return (
-    <div className="flex flex-col gap-8 animate-fade-in text-foreground">
+    <div className="flex flex-col gap-7 animate-fade-in">
 
       {/* Header Panel */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-brand-500/5 pb-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-neutral-800 pb-5">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Dashboard Overview</h1>
-          <p className="text-xs text-foreground/50">Welcome back, Dr. Rahul Mehta. Monitor active schedules and clinical performance metrics.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Dashboard Overview</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Welcome back, Dr. Emma Stone. Monitor active schedules and clinical performance.</p>
         </div>
         <Link
           href="/admin/appointments"
-          className="rounded-xl bg-brand-500 px-4 py-2 text-xs font-bold text-white shadow-md shadow-brand-500/10 hover:bg-brand-600 hover:-translate-y-0.5 transition-all duration-200"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#0b469a] px-4 py-2.5 text-[13px] font-bold text-white
+            shadow-md shadow-[#0b469a]/25 hover:bg-[#083580] hover:-translate-y-px
+            active:scale-[0.97] transition-all duration-150"
         >
           View Appointments
         </Link>
       </div>
 
-      {/* KPI Cards (Dashboard Top Row from Reference) */}
-      <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+      {/* KPI Cards */}
+      <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
         {kpis.map((kpi, i) => (
           <div
             key={i}
-            className="glass-card p-5 border border-brand-500/5 hover:border-brand-500/15 shadow flex flex-col justify-between gap-4"
+            className="bg-white dark:bg-[#0d1117] rounded-2xl p-5
+              border border-slate-200 dark:border-neutral-800
+              hover:border-[#0b469a]/30 hover:shadow-md dark:hover:border-blue-800/50
+              shadow-sm transition-all duration-200 flex flex-col justify-between gap-4"
           >
             <div className="flex flex-col gap-1.5">
-              <span className="text-3xs font-extrabold text-foreground/55 uppercase tracking-wider">{kpi.name}</span>
-              <span className="text-2xl font-extrabold tracking-tight">{kpi.value}</span>
+              <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">{kpi.name}</span>
+              <span className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">{kpi.value}</span>
             </div>
-
             <Link
               href={kpi.link}
-              className="text-4xs font-bold text-brand-500 hover:text-brand-600 transition-colors inline-flex items-center gap-0.5"
+              className="text-[11px] font-bold text-[#0b469a] dark:text-blue-400 hover:text-[#083580] dark:hover:text-blue-300 transition-colors inline-flex items-center gap-0.5"
             >
               <span>View all</span>
               <ChevronRight className="h-3 w-3" />
@@ -93,13 +97,13 @@ export default function AdminDashboardOverview() {
         <div className="lg:col-span-8 flex flex-col gap-8">
 
           {/* Card 1: Appointments Overview Line Graph */}
-          <div className="glass-card p-6 border border-brand-500/5 shadow flex flex-col gap-6">
-            <div className="flex items-center justify-between border-b border-brand-500/5 pb-3">
+          <div className="bg-white dark:bg-[#0d1117] rounded-2xl p-6 border border-slate-200 dark:border-neutral-800 shadow-sm flex flex-col gap-6">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-neutral-800 pb-3">
               <div className="flex flex-col gap-0.5">
-                <h3 className="text-xs font-extrabold">Appointments Overview</h3>
-                <span className="text-4xs text-foreground/60 leading-none">Weekly visitation analysis</span>
+                <h3 className="text-[13px] font-bold text-slate-900 dark:text-white">Appointments Overview</h3>
+                <span className="text-[11px] text-slate-400 dark:text-slate-500">Weekly visitation analysis</span>
               </div>
-              <span className="text-4xs font-bold text-brand-500 bg-brand-500/10 px-2 py-0.5 rounded">This Week</span>
+              <span className="text-[11px] font-bold text-[#0b469a] dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30 px-2.5 py-1 rounded-lg">This Week</span>
             </div>
 
             {/* Custom SVG Line Graph representation matching reference exactly */}
@@ -149,9 +153,9 @@ export default function AdminDashboardOverview() {
           </div>
 
           {/* Card 2: Donut Chart - Leads Overview */}
-          <div className="glass-card p-6 border border-brand-500/5 shadow flex flex-col gap-6">
-            <div className="border-b border-brand-500/5 pb-3">
-              <h3 className="text-xs font-extrabold">Leads Overview</h3>
+          <div className="bg-white dark:bg-[#0d1117] rounded-2xl p-6 border border-slate-200 dark:border-neutral-800 shadow-sm flex flex-col gap-6">
+            <div className="border-b border-slate-100 dark:border-neutral-800 pb-3">
+              <h3 className="text-[13px] font-bold text-slate-900 dark:text-white">Leads Overview</h3>
             </div>
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 items-center">
@@ -195,10 +199,10 @@ export default function AdminDashboardOverview() {
         <div className="lg:col-span-4 flex flex-col gap-8">
 
           {/* Card 3: Recent Appointments feeds */}
-          <div className="glass-card p-6 border border-brand-500/5 shadow flex flex-col gap-4">
-            <div className="flex items-center justify-between border-b border-brand-500/5 pb-3">
-              <h3 className="text-xs font-extrabold">Recent Appointments</h3>
-              <Link href="/admin/appointments" className="text-4xs font-bold text-brand-500 hover:underline">View All</Link>
+          <div className="bg-white dark:bg-[#0d1117] rounded-2xl p-6 border border-slate-200 dark:border-neutral-800 shadow-sm flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-neutral-800 pb-3">
+              <h3 className="text-[13px] font-bold text-slate-900 dark:text-white">Recent Appointments</h3>
+              <Link href="/admin/appointments" className="text-[11px] font-bold text-[#0b469a] dark:text-blue-400 hover:text-[#083580] dark:hover:text-blue-300 transition-colors">View All</Link>
             </div>
 
             <div className="flex flex-col gap-3.5 max-h-80 overflow-y-auto pr-1">
@@ -210,19 +214,19 @@ export default function AdminDashboardOverview() {
               ].map((appt, idx) => (
                 <div
                   key={idx}
-                  className="p-3 rounded-xl bg-brand-50/20 dark:bg-neutral-900/30 border border-brand-500/5 flex items-center gap-3 animate-fade-in hover:border-brand-500/15 transition-colors"
+                  className="p-3 rounded-xl bg-slate-50 dark:bg-neutral-900/50 border border-slate-100 dark:border-neutral-800 flex items-center gap-3 hover:border-[#0b469a]/20 transition-colors"
                 >
                   <img
                     src={appt.image}
                     alt={appt.name}
-                    className="h-9 w-9 rounded-lg object-cover border border-brand-500/10"
+                    className="h-9 w-9 rounded-lg object-cover border border-[#0b469a]/10"
                   />
                   <div className="flex-1 flex flex-col min-w-0">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs font-bold text-foreground truncate">{appt.name}</span>
-                      <span className="text-4xs text-brand-500 font-bold">{appt.time}</span>
+                      <span className="text-[13px] font-bold text-slate-900 dark:text-white truncate">{appt.name}</span>
+                      <span className="text-[11px] text-[#0b469a] dark:text-blue-400 font-semibold">{appt.time}</span>
                     </div>
-                    <span className="text-4xs text-foreground/60 font-semibold truncate mt-0.5">{appt.service}</span>
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium truncate mt-0.5">{appt.service}</span>
                   </div>
                 </div>
               ))}
@@ -230,18 +234,18 @@ export default function AdminDashboardOverview() {
           </div>
 
           {/* Card 4: Popular Services Progress bars */}
-          <div className="glass-card p-6 border border-brand-500/5 shadow flex flex-col gap-4">
-            <div className="flex items-center justify-between border-b border-brand-500/5 pb-3">
-              <h3 className="text-xs font-extrabold">Popular Services</h3>
-              <Link href="/services" className="text-4xs font-bold text-brand-500 hover:underline">View All</Link>
+          <div className="bg-white dark:bg-[#0d1117] rounded-2xl p-6 border border-slate-200 dark:border-neutral-800 shadow-sm flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-neutral-800 pb-3">
+              <h3 className="text-[13px] font-bold text-slate-900 dark:text-white">Popular Services</h3>
+              <Link href="/services" className="text-[11px] font-bold text-[#0b469a] dark:text-blue-400 hover:text-[#083580] dark:hover:text-blue-300 transition-colors">View All</Link>
             </div>
 
             <div className="flex flex-col gap-4">
               {popularServices.map((service, i) => (
-                <div key={i} className="flex flex-col gap-2 text-xs">
-                  <div className="flex justify-between items-center font-bold">
-                    <span>{service.name}</span>
-                    <span className="text-brand-500">{service.pct}%</span>
+                <div key={i} className="flex flex-col gap-2">
+                  <div className="flex justify-between items-center text-[13px] font-semibold">
+                    <span className="text-slate-700 dark:text-slate-300">{service.name}</span>
+                    <span className="text-[#0b469a] dark:text-blue-400 font-bold">{service.pct}%</span>
                   </div>
                   {/* Progress bar container */}
                   <div className="w-full h-2 rounded bg-slate-100 dark:bg-neutral-900 overflow-hidden">

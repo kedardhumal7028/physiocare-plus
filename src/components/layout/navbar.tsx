@@ -1,15 +1,16 @@
-// d:\Physo\physiocare-plus\src\components\layout\navbar.tsx
+// src/components/layout/navbar.tsx
 "use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "@/app/providers";
-import { Sun, Moon, Menu, X, Activity } from "lucide-react";
+import { Sun, Moon, Menu, X, Activity, Send } from "lucide-react";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
@@ -19,11 +20,21 @@ export default function Navbar() {
     { name: "Admin Dashboard", href: "/admin" },
   ];
 
+  const handleInquiryClick = () => {
+    setIsOpen(false);
+    if (pathname === "/") {
+      const el = document.getElementById("contact");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      router.push("/#contact");
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full transition-all duration-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <nav className="glass-card mt-4 flex h-16 items-center justify-between rounded-2xl px-6 transition-all duration-300">
-          
+
           {/* Logo Branding */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500 text-white shadow-md shadow-brand-500/20 transition-all duration-300 group-hover:scale-110">
@@ -35,7 +46,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-7">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -53,8 +64,8 @@ export default function Navbar() {
           </div>
 
           {/* CTA & Controls */}
-          <div className="hidden md:flex items-center gap-4">
-            {/* Theme Toggle Button */}
+          <div className="hidden md:flex items-center gap-3">
+            {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-brand-500/20 bg-brand-50/10 text-foreground/80 transition-all duration-300 hover:scale-105 hover:bg-brand-500/10 active:scale-95"
@@ -63,10 +74,20 @@ export default function Navbar() {
               {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </button>
 
+            {/* Inquiry Button */}
+            <button
+              id="navbar-inquiry-btn"
+              onClick={handleInquiryClick}
+              className="flex items-center gap-2 rounded-xl border border-brand-500/25 bg-brand-50/30 dark:bg-brand-900/10 px-4 py-2.5 text-sm font-semibold text-brand-500 transition-all duration-300 hover:bg-brand-500/10 hover:border-brand-500/40 hover:-translate-y-0.5 active:scale-95"
+            >
+              <Send className="h-4 w-4" />
+              Inquiry
+            </button>
+
             {/* Direct Booking CTA */}
             <Link
               href="/portal/book"
-              className="rounded-xl bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-lg active:scale-98"
+              className="rounded-xl bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-lg active:scale-95"
             >
               Book Appointment
             </Link>
@@ -114,6 +135,15 @@ export default function Navbar() {
               );
             })}
             <hr className="border-brand-500/10" />
+            {/* Mobile Inquiry Button */}
+            <button
+              id="navbar-inquiry-btn-mobile"
+              onClick={handleInquiryClick}
+              className="flex items-center justify-center gap-2 w-full rounded-xl border border-brand-500/25 bg-brand-50/30 dark:bg-brand-900/10 py-3 text-sm font-semibold text-brand-500 transition-all duration-200 hover:bg-brand-500/10"
+            >
+              <Send className="h-4 w-4" />
+              Send Inquiry
+            </button>
             <Link
               href="/portal/book"
               onClick={() => setIsOpen(false)}

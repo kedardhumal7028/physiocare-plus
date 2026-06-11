@@ -9,14 +9,14 @@ import Container from "../layout/Container";
 
 export default function CTA() {
   return (
-    <section className="py-20 md:py-24 relative overflow-hidden">
+    <section className="py-4 md:py-6 relative overflow-hidden">
       
       {/* Decorative gradient blur */}
       <div className="absolute top-0 right-0 -z-10 h-72 w-72 rounded-full bg-brand-500/10 blur-3xl"></div>
       <div className="absolute bottom-0 left-0 -z-10 h-72 w-72 rounded-full bg-accent-500/10 blur-3xl"></div>
 
       <Container>
-        <div className="glass-card rounded-3xl p-8 md:p-16 border border-brand-500/15 shadow-2xl relative overflow-hidden bg-brand-900/5 dark:bg-neutral-950/20">
+        <div className="glass-card rounded-3xl p-6 md:p-10 border border-brand-500/15 shadow-2xl relative overflow-hidden bg-brand-900/5 dark:bg-neutral-950/20">
           
           <div className="max-w-2xl flex flex-col gap-6 text-left">
             <span className="text-xs font-bold uppercase tracking-wider text-brand-500 flex items-center gap-1.5">

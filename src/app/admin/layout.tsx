@@ -1,4 +1,3 @@
-// d:\Physo\physiocare-plus\src\app\admin\layout.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -6,167 +5,265 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "@/app/providers";
 import {
-  Activity,
-  LayoutDashboard,
-  Calendar,
-  Users,
-  Settings,
-  Home,
-  Menu,
-  X,
-  Moon,
-  Sun
+  Activity, LayoutDashboard, Calendar,
+  Users, MessageSquare, Home, Menu, X,
+  Moon, Sun, Bell, ChevronRight,
 } from "lucide-react";
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const pathname = usePathname();
+/* ─── Nav config ──────────────────────────────────────────────────── */
+const ADMIN_NAV = [
+  { label: "Dashboard",    href: "/admin",               icon: LayoutDashboard },
+  { label: "Appointments", href: "/admin/appointments",  icon: Calendar        },
+  { label: "Patients",     href: "/admin/patients",      icon: Users           },
+  { label: "Inquiries",    href: "/admin/inquiries",     icon: MessageSquare   },
+];
+
+/* ═══════════════════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════════════════ */
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const pathname  = usePathname();
   const { theme, toggleTheme } = useTheme();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const adminLinks = [
-    { name: "Overview Dashboard", href: "/admin", icon: LayoutDashboard },
-    { name: "Appointments Master", href: "/admin/appointments", icon: Calendar },
-    { name: "Patients Directory", href: "/admin/patients", icon: Users },
-  ];
+  const isActive = (href: string) =>
+    href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
 
-  return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-brand-50/5 text-foreground bg-grid-pattern">
+  const currentPage = ADMIN_NAV.find((n) => isActive(n.href))?.label ?? "Dashboard";
 
-      {/* ================= MOBILE NAVIGATION BAR ================= */}
-      <div className="flex md:hidden items-center justify-between px-4 py-3 bg-background border-b border-brand-500/10 sticky top-0 z-40 shadow-sm">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-500 text-white">
-            <Activity className="h-5 w-5" />
+  /* ── Sidebar inner (shared between desktop + mobile) ── */
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full">
+      {/* Logo bar */}
+      <div className="flex items-center justify-between h-[68px] px-5 shrink-0
+        border-b border-slate-200 dark:border-white/[0.07]">
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl
+            bg-[#0b469a] text-white
+            shadow-[0_2px_8px_rgba(11,70,154,0.4)]
+            group-hover:scale-105 transition-transform duration-200">
+            <Activity className="h-[17px] w-[17px]" />
           </div>
-          <span className="text-base font-bold tracking-tight text-foreground">
-            PhysioCare<span className="text-brand-500">Plus</span>
-          </span>
+          <div className="leading-none">
+            <div className="text-[14px] font-extrabold tracking-tight text-slate-900 dark:text-white">
+              PhysioCare<span className="text-[#0b469a] dark:text-blue-400">Plus</span>
+            </div>
+            <div className="text-[9px] text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-[0.12em] mt-0.5">
+              Admin Panel
+            </div>
+          </div>
         </Link>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-brand-500/10 text-foreground/80 bg-brand-50/5"
-            aria-label="Toggle theme"
-          >
-            {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-          </button>
-          <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-foreground/80 active:scale-95"
-            aria-label="Toggle sidebar menu"
-          >
-            {isSidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+        <button
+          onClick={() => setSidebarOpen(false)}
+          className="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+
+      {/* Doctor profile card */}
+      <div className="mx-3 mt-4 p-3 rounded-xl flex items-center gap-3
+        bg-gradient-to-br from-[#0b469a]/10 to-blue-50/80
+        dark:from-blue-950/40 dark:to-[#0b469a]/5
+        border border-blue-100 dark:border-blue-900/30">
+        <img
+          src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=100"
+          alt="Dr. Emma Stone"
+          className="h-9 w-9 rounded-lg object-cover ring-2 ring-[#0b469a]/25 shrink-0"
+        />
+        <div className="min-w-0">
+          <p className="text-[13px] font-bold text-slate-900 dark:text-white truncate">Dr. Emma Stone</p>
+          <p className="text-[10px] font-semibold text-[#0b469a] dark:text-blue-400 uppercase tracking-wider mt-0.5">Administrator</p>
         </div>
       </div>
 
-      {/* ================= SIDEBAR COMPONENT ================= */}
-      <aside className={`fixed inset-y-0 left-0 z-50 md:sticky md:z-10 w-64 border-r border-brand-500/10 bg-background md:bg-background/80 md:backdrop-blur-md px-4 py-6 flex flex-col justify-between transition-transform duration-300 md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}>
+      {/* Navigation */}
+      <nav className="flex flex-col gap-0.5 px-3 mt-5 flex-1" aria-label="Admin navigation">
+        <p className="px-2 mb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400 dark:text-slate-500 select-none">
+          Main Menu
+        </p>
+        {ADMIN_NAV.map(({ label, href, icon: Icon }) => {
+          const active = isActive(href);
+          return (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setSidebarOpen(false)}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium
+                transition-all duration-150 group
+                ${active
+                  ? "bg-[#0b469a] text-white shadow-md shadow-[#0b469a]/25 font-semibold"
+                  : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.06] hover:text-slate-900 dark:hover:text-white"
+                }`}
+            >
+              <Icon className={`h-4 w-4 shrink-0 transition-colors
+                ${active
+                  ? "text-white/90"
+                  : "text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300"
+                }`}
+              />
+              <span className="flex-1">{label}</span>
+              {active && <ChevronRight className="h-3.5 w-3.5 text-white/50 shrink-0" />}
+            </Link>
+          );
+        })}
+      </nav>
 
-        <div className="flex flex-col gap-8">
-          {/* Logo Branding */}
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-500 text-white group-hover:scale-105 transition-transform duration-200">
-                <Activity className="h-5 w-5" />
+      {/* Footer controls */}
+      <div className="px-3 pb-4 mt-4 border-t border-slate-200 dark:border-white/[0.07] pt-4 flex flex-col gap-0.5">
+        <button
+          onClick={toggleTheme}
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl w-full text-left
+            text-[13px] font-medium text-slate-600 dark:text-slate-300
+            hover:bg-slate-100 dark:hover:bg-white/[0.06] hover:text-slate-900 dark:hover:text-white
+            transition-colors duration-150 cursor-pointer group"
+        >
+          {theme === "light"
+            ? <><Moon className="h-4 w-4 text-slate-400 group-hover:text-slate-600 shrink-0" /><span>Dark Mode</span></>
+            : <><Sun  className="h-4 w-4 text-slate-400 group-hover:text-slate-300 shrink-0" /><span>Light Mode</span></>
+          }
+        </button>
+        <Link
+          href="/"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl
+            text-[13px] font-medium text-slate-600 dark:text-slate-300
+            hover:bg-slate-100 dark:hover:bg-white/[0.06] hover:text-slate-900 dark:hover:text-white
+            transition-colors duration-150 group"
+        >
+          <Home className="h-4 w-4 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 shrink-0" />
+          Back to Website
+        </Link>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen flex bg-slate-50 dark:bg-[#080c14] text-slate-900 dark:text-slate-100">
+
+      {/* ══ Sidebar — Desktop: always visible, Mobile: slide-in ══ */}
+
+      {/* Mobile backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar panel */}
+      <aside
+        className={`
+          fixed inset-y-0 left-0 z-40 w-64 shrink-0
+          bg-white dark:bg-[#0d1118]
+          border-r border-slate-200 dark:border-white/[0.07]
+          transition-transform duration-300 ease-in-out
+          md:sticky md:top-0 md:h-screen md:translate-x-0
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
+      >
+        <SidebarContent />
+      </aside>
+
+      {/* ══ Main area ══ */}
+      <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+
+        {/* ── Top bar ── */}
+        <header className="sticky top-0 z-20 h-[68px] shrink-0 flex items-center justify-between px-5 md:px-6
+          bg-white dark:bg-[#0d1118]
+          border-b border-slate-200 dark:border-white/[0.07]
+          shadow-sm shadow-black/[0.04] dark:shadow-black/[0.3]">
+
+          {/* Left: burger + breadcrumb */}
+          <div className="flex items-center gap-3">
+            {/* Hamburger — mobile only */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open menu"
+              className="md:hidden flex h-9 w-9 items-center justify-center rounded-lg
+                border border-slate-200 dark:border-white/10
+                bg-slate-50 dark:bg-white/[0.04]
+                text-slate-500 dark:text-slate-400
+                hover:text-[#0b469a] dark:hover:text-blue-400
+                active:scale-95 transition-all duration-150"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+
+            {/* Logo on mobile top bar */}
+            <Link href="/" className="flex items-center gap-2 md:hidden group">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0b469a] text-white">
+                <Activity className="h-4 w-4" />
               </div>
-              <span className="text-lg font-bold tracking-tight text-foreground">
-                PhysioCare<span className="text-brand-500">Plus</span>
+              <span className="text-[14px] font-extrabold text-slate-900 dark:text-white">
+                PhysioCare<span className="text-[#0b469a] dark:text-blue-400">Plus</span>
               </span>
             </Link>
-            <button
-              onClick={() => setIsSidebarOpen(false)}
-              className="md:hidden text-foreground/50 hover:text-foreground"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
 
-          {/* Quick Doctor Profile Card */}
-          <div className="p-3.5 rounded-xl bg-brand-50/50 dark:bg-neutral-900/50 border border-brand-500/5 flex items-center gap-3">
-            <img
-              src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=100"
-              alt="Physiotherapist avatar profile"
-              className="h-10 w-10 rounded-lg object-cover"
-            />
-            <div className="flex flex-col">
-              <span className="text-xs font-bold text-foreground">Dr. Emma Stone</span>
-              <span className="text-3xs text-brand-500 font-bold uppercase tracking-wider">Administrator</span>
+            {/* Breadcrumb — desktop */}
+            <div className="hidden md:flex items-center gap-1.5 text-[13px]">
+              <span className="text-slate-400 dark:text-slate-500 font-medium">Admin</span>
+              <ChevronRight className="h-3.5 w-3.5 text-slate-300 dark:text-white/20" />
+              <span className="font-semibold text-slate-900 dark:text-white">{currentPage}</span>
             </div>
           </div>
 
-          {/* Core Panel Navigation Links */}
-          <nav className="flex flex-col gap-1">
-            {adminLinks.map((link) => {
-              const isActive = pathname === link.href;
-              const Icon = link.icon;
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsSidebarOpen(false)}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${isActive
-                    ? "bg-brand-500 text-white shadow-md shadow-brand-500/10"
-                    : "text-foreground/80 hover:bg-brand-500/5"
-                    }`}
-                >
-                  <Icon className="h-4.5 w-4.5" />
-                  <span>{link.name}</span>
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
+          {/* Right: actions */}
+          <div className="flex items-center gap-2">
+            {/* Bell */}
+            <button className="relative flex h-[34px] w-[34px] items-center justify-center rounded-lg
+              border border-slate-200 dark:border-white/10
+              bg-slate-50 dark:bg-white/[0.04]
+              text-slate-500 dark:text-slate-400
+              hover:border-[#0b469a]/40 dark:hover:border-blue-400/40
+              hover:text-[#0b469a] dark:hover:text-blue-400
+              hover:bg-[#0b469a]/5 dark:hover:bg-blue-400/10
+              active:scale-95 transition-all duration-150">
+              <Bell className="h-[15px] w-[15px]" />
+              <span className="absolute top-1.5 right-1.5 h-[7px] w-[7px] rounded-full
+                bg-red-500 ring-[1.5px] ring-white dark:ring-[#0d1118]" />
+            </button>
 
-        {/* Sidebar Footer Controls */}
-        <div className="flex flex-col gap-3">
-          {/* Quick theme switcher for desktop */}
-          <button
-            onClick={toggleTheme}
-            className="hidden md:flex items-center gap-3 px-3 py-2 text-xs font-bold text-foreground/80 rounded-xl hover:bg-brand-500/5 cursor-pointer"
-          >
-            {theme === "light" ? (
-              <>
-                <Moon className="h-4.5 w-4.5 text-brand-500" />
-                <span>Switch Dark Mode</span>
-              </>
-            ) : (
-              <>
-                <Sun className="h-4.5 w-4.5 text-brand-500" />
-                <span>Switch Light Mode</span>
-              </>
-            )}
-          </button>
+            {/* Dark mode */}
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle dark mode"
+              className="flex h-[34px] w-[34px] items-center justify-center rounded-lg
+                border border-slate-200 dark:border-white/10
+                bg-slate-50 dark:bg-white/[0.04]
+                text-slate-500 dark:text-slate-400
+                hover:border-[#0b469a]/40 dark:hover:border-blue-400/40
+                hover:text-[#0b469a] dark:hover:text-blue-400
+                hover:bg-[#0b469a]/5 dark:hover:bg-blue-400/10
+                active:scale-95 transition-all duration-150 cursor-pointer"
+            >
+              {theme === "light"
+                ? <Moon className="h-[15px] w-[15px]" />
+                : <Sun  className="h-[15px] w-[15px]" />}
+            </button>
 
-          <Link
-            href="/"
-            className="flex items-center gap-3 px-3 py-2 text-xs font-bold text-foreground/80 rounded-xl hover:bg-brand-500/5 cursor-pointer"
-          >
-            <Home className="h-4.5 w-4.5 text-brand-500" />
-            <span>Go to Public Website</span>
-          </Link>
-        </div>
+            {/* Divider + Avatar */}
+            <div className="flex items-center gap-2.5 pl-3 ml-1
+              border-l border-slate-200 dark:border-white/[0.07]">
+              <img
+                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=100"
+                alt="Dr. Emma Stone"
+                className="h-8 w-8 rounded-lg object-cover
+                  ring-2 ring-[#0b469a]/20 dark:ring-blue-400/20"
+              />
+              <div className="hidden sm:block leading-none">
+                <p className="text-[13px] font-semibold text-slate-900 dark:text-white">Dr. Emma Stone</p>
+                <p className="text-[10px] text-[#0b469a] dark:text-blue-400 font-semibold mt-0.5">Admin</p>
+              </div>
+            </div>
+          </div>
+        </header>
 
-      </aside>
-
-      {/* Main dashboard content panel wrapper */}
-      <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
-        {children}
-      </main>
-
-      {/* Click backdrop helper for mobile open sidebars */}
-      {isSidebarOpen && (
-        <div
-          onClick={() => setIsSidebarOpen(false)}
-          className="fixed inset-0 bg-black/40 z-30 md:hidden animate-fade-in"
-        ></div>
-      )}
-
+        {/* ── Page content ── */}
+        <main className="flex-1 overflow-y-auto p-5 md:p-7 lg:p-8
+          bg-slate-50 dark:bg-[#080c14]">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

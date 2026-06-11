@@ -114,35 +114,6 @@ export const MOCK_CLINICIANS: Clinician[] = [
       4: ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"], // Thu
       5: ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"]  // Fri
     }
-  },
-  {
-    id: "clin-2",
-    first_name: "Marcus",
-    last_name: "Vance",
-    specialties: ["Dry Needling", "Manual Manipulation", "Post-Op Recovery"],
-    bio: "Dr. Marcus Vance, PT, MS, is a leading specialist in trigger point needling and surgical patient rehabilitation pathways.",
-    avatar_url: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300",
-    rating: 4.8,
-    reviews_count: 98,
-    availability: {
-      1: ["10:00", "11:00", "13:00", "14:00", "15:00", "17:00"],
-      3: ["10:00", "11:00", "13:00", "14:00", "15:00", "17:00"],
-      5: ["10:00", "11:00", "13:00", "14:00", "15:00", "17:00"]
-    }
-  },
-  {
-    id: "clin-3",
-    first_name: "Linda",
-    last_name: "Carter",
-    specialties: ["Geriatric Care", "Post-Op Recovery", "Home Visit Elite"],
-    bio: "Dr. Linda Carter, PT, focuses on elderly safety, stroke recoveries, and providing high-fidelity physical therapies in patient homes.",
-    avatar_url: "https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=300",
-    rating: 5.0,
-    reviews_count: 165,
-    availability: {
-      2: ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00"],
-      4: ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00"]
-    }
   }
 ];
 
