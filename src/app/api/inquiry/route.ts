@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+/*import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import connectToDatabase from "@/lib/mongodb";
 import { InquiryModel } from "@/lib/models/Inquiry";
@@ -176,4 +176,22 @@ export async function PATCH(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+*/
+
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  return NextResponse.json({
+    success: true,
+    message: "Demo inquiry API working",
+    data: [],
+  });
+}
+
+export async function POST() {
+  return NextResponse.json({
+    success: true,
+    message: "Inquiry received successfully (Demo mode)",
+  });
 }
