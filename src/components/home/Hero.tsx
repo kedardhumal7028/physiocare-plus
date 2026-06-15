@@ -24,9 +24,9 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex items-center overflow-hidden h-[calc(100vh-72px)] bg-background transition-colors duration-300"
+      className="relative flex items-end md:items-center min-h-[calc(100vh-72px)] overflow-hidden bg-background transition-colors duration-300"
     >
-      {/* ── Background Image ── */}
+      {/* ── Background Image (Full screen on both desktop and mobile) ── */}
       <div className="absolute inset-0 z-0">
         <img
           src="/hero-bg.png"
@@ -36,37 +36,38 @@ export default function Hero() {
           style={{ objectPosition: "65% 25%" }}
         />
 
-        {/* Gradient overlay adapting to theme: Light vs Dark */}
+        {/* Desktop Gradient overlay */}
         <div
-          className="absolute inset-0 transition-colors duration-300"
+          className="hidden md:block absolute inset-0 transition-colors duration-300"
           style={{
             background: "linear-gradient(to right, var(--background) 0%, var(--background) 30%, color-mix(in srgb, var(--background) 50%, transparent) 45%, transparent 65%)",
           }}
         />
 
-        {/* Fallback solid overlay on mobile for legibility */}
-        <div className="absolute inset-0 bg-background/80 md:bg-transparent transition-colors duration-300" />
+        {/* Mobile Gradient overlay (Top fade for header visibility) */}
+        <div className="absolute inset-0 md:hidden bg-gradient-to-b from-background/40 to-transparent" />
       </div>
 
-      {/* ── Content ── */}
-      <div className="relative z-10 w-full">
-        <Container>
-          {/* Tighter gaps: gap-4 instead of gap-8 */}
-          <div className="max-w-[540px] flex flex-col gap-4">
+      {/* ── Content Wrapper ── */}
+      <div className="relative z-10 w-full mt-auto md:mt-0">
+        {/* Mobile Card Wrapper */}
+        <div className="w-full bg-background/95 backdrop-blur-2xl md:bg-transparent md:backdrop-blur-none rounded-t-[2.25rem] md:rounded-none pt-8 pb-10 md:py-0 shadow-[0_-8px_40px_-12px_rgba(0,0,0,0.2)] md:shadow-none border-t border-border/50 md:border-none transition-all duration-300">
+          <Container>
+            <div className="max-w-[540px] flex flex-col gap-5 md:gap-4 mx-auto md:mx-0 text-center md:text-left">
 
             {/* Live badge */}
-            <div className="flex w-fit items-center gap-2 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800/40 px-3 py-1.5 text-[10px] font-bold text-brand-500 uppercase tracking-wider shadow-sm">
+            <div className="flex w-fit mx-auto md:mx-0 items-center gap-2 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800/40 px-3 py-1.5 text-[10.5px] font-bold text-brand-500 uppercase tracking-wider shadow-sm">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-500" />
               </span>
-              Pune&apos;s #1 Physiotherapy Clinic · Now Accepting Patients
+              Pune&apos;s #1 Physiotherapy Clinic
             </div>
 
             {/* Headline */}
-            <div className="flex flex-col gap-3">
-              <h1 className="text-[2.2rem] sm:text-[3rem] lg:text-[3.5rem] font-extrabold tracking-tight text-foreground leading-[1.05]">
-                <span className="whitespace-nowrap">
+            <div className="flex flex-col gap-2.5 md:gap-4 mt-1 md:mt-0">
+              <h1 className="text-[2.25rem] sm:text-[3rem] lg:text-[3.5rem] font-extrabold tracking-tight text-foreground leading-[1.1] md:leading-[1.05]">
+                <span className="sm:whitespace-nowrap">
                   Advanced{" "}
                   <span
                     style={{
@@ -79,17 +80,17 @@ export default function Hero() {
                     Physiotherapy
                   </span>
                 </span>
-                <br />
-                Care in Pune
+                <br className="hidden md:block" />
+                {" "}Care in Pune
               </h1>
 
-              <p className="text-sm sm:text-[15px] text-foreground/70 leading-relaxed max-w-[460px] font-medium">
+              <p className="text-[14.5px] sm:text-[15px] text-foreground/70 leading-relaxed max-w-[460px] mx-auto md:mx-0 font-medium">
                 Personalized treatment plans, advanced techniques, and expert one-on-one care — helping you recover faster and live pain-free.
               </p>
             </div>
 
-            {/* Trust chips - compact */}
-            <div className="flex flex-wrap gap-1.5 mt-1">
+            {/* Trust chips - compact & centered on mobile */}
+            <div className="flex flex-wrap justify-center md:justify-start gap-1.5 mt-1">
               {TRUST_CHIPS.map((chip) => (
                 <span
                   key={chip}
@@ -102,7 +103,7 @@ export default function Hero() {
             </div>
 
             {/* Social proof */}
-            <div className="flex items-center gap-3 mt-1">
+            <div className="flex items-center justify-center md:justify-start gap-3 mt-1">
               <div className="flex items-center gap-0.5">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
@@ -110,64 +111,66 @@ export default function Hero() {
               </div>
               <div className="flex -space-x-2">
                 {[
-                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=60",
-                  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=60",
-                  "https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?auto=format&fit=crop&q=80&w=60",
-                  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=60",
+                  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=60",
+                  "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=60",
+                  "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&q=80&w=60",
+                  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=60",
                 ].map((src, i) => (
                   <img
                     key={i}
                     src={src}
                     alt="Happy patient"
-                    className="h-7 w-7 rounded-full border-2 border-background object-cover shadow"
+                    className="h-7 w-7 md:h-8 md:w-8 rounded-full border-2 border-background object-cover shadow"
                   />
                 ))}
               </div>
-              <p className="text-xs text-foreground/70 font-medium">
+              <p className="text-xs md:text-sm text-foreground/70 font-medium">
                 <span className="font-extrabold text-foreground">1,200+</span> happy patients
               </p>
             </div>
 
-            {/* CTA row - tighter sizing */}
-            <div className="flex flex-wrap items-center gap-2 pt-2">
+            {/* CTA row - responsive full-width on mobile */}
+            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center md:justify-start gap-3 pt-4 md:pt-2 w-full">
               <Link
                 href="/portal/book"
-                className="group inline-flex items-center gap-1.5 rounded-xl bg-brand-500 px-5 py-3 text-[13px] font-bold text-white
+                className="group w-full sm:w-auto justify-center inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 md:py-3 text-[14px] md:text-[13px] font-bold text-white
                   shadow-lg shadow-brand-500/25
                   hover:bg-brand-600 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand-500/35
                   active:scale-[0.98] transition-all duration-200"
               >
-                <Calendar className="h-3.5 w-3.5" />
+                <Calendar className="h-4 w-4 md:h-3.5 md:w-3.5" />
                 Book Appointment
-                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                <ArrowRight className="h-4 w-4 md:h-3.5 md:w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
               </Link>
 
-              <a
-                href="https://wa.me/919876543210?text=Hello%20PhysioCare%20Plus%2C%20I%20would%20like%20to%20inquire%20about%20a%20physiotherapy%20session!"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-xl border border-[#25D366]/40 bg-[#25D366]/10 px-4 py-3 text-[13px] font-bold text-foreground/80
-                  hover:border-[#25D366]/70 hover:bg-[#25D366]/20 hover:-translate-y-0.5
-                  active:scale-[0.98] transition-all duration-200"
-              >
-                <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
-                WhatsApp Chat
-              </a>
+              <div className="flex w-full sm:w-auto gap-3">
+                <a
+                  href="https://wa.me/919876543210?text=Hello%20PhysioCare%20Plus%2C%20I%20would%20like%20to%20inquire%20about%20a%20physiotherapy%20session!"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 sm:flex-none justify-center inline-flex items-center gap-1.5 rounded-xl border border-[#25D366]/40 bg-[#25D366]/10 px-4 py-3.5 md:py-3 text-[14px] md:text-[13px] font-bold text-foreground/80
+                    hover:border-[#25D366]/70 hover:bg-[#25D366]/20 hover:-translate-y-0.5
+                    active:scale-[0.98] transition-all duration-200"
+                >
+                  <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
+                  WhatsApp
+                </a>
 
-              <a
-                href="tel:+911234567890"
-                className="inline-flex items-center gap-1.5 rounded-xl border border-card-border bg-card/80 backdrop-blur-sm px-4 py-3 text-[13px] font-bold text-foreground/80
-                  hover:border-brand-500/40 hover:text-brand-500 hover:-translate-y-0.5
-                  active:scale-[0.98] transition-all duration-200"
-              >
-                <PhoneCall className="h-3.5 w-3.5 text-brand-500" />
-                Call Us
-              </a>
+                <a
+                  href="tel:+911234567890"
+                  className="flex-1 sm:flex-none justify-center inline-flex items-center gap-1.5 rounded-xl border border-card-border bg-card/80 backdrop-blur-sm px-4 py-3.5 md:py-3 text-[14px] md:text-[13px] font-bold text-foreground/80
+                    hover:border-brand-500/40 hover:text-brand-500 hover:-translate-y-0.5
+                    active:scale-[0.98] transition-all duration-200"
+                >
+                  <PhoneCall className="h-4 w-4 md:h-3.5 md:w-3.5 text-brand-500" />
+                  Call Us
+                </a>
+              </div>
             </div>
-
           </div>
         </Container>
       </div>
+    </div>
     </section>
   );
 }

@@ -100,11 +100,11 @@ export const MOCK_SERVICES: Service[] = [
 export const MOCK_CLINICIANS: Clinician[] = [
   {
     id: "clin-1",
-    first_name: "Emma",
-    last_name: "Stone",
+    first_name: "Rajesh",
+    last_name: "Sharma",
     specialties: ["Sports Injury Rehab", "Manual Manipulation"],
-    bio: "Dr. Emma Stone, PT, DPT, specializes in sports biomechanics and manual joint adjustment with over 8 years of clinical athletic support.",
-    avatar_url: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300",
+    bio: "Dr. Rajesh Sharma, PT, DPT, specializes in sports biomechanics and manual joint adjustment with over 8 years of clinical athletic support.",
+    avatar_url: "/images/dr-rajesh.png",
     rating: 4.9,
     reviews_count: 142,
     availability: {
