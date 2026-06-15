@@ -100,22 +100,22 @@ export default function Home() {
               <div className="glass-card p-7 md:p-9 border border-slate-200 dark:border-neutral-800 shadow-lg flex flex-col gap-6">
                 <div className="flex flex-col gap-1">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-brand-500">Lead Specialist</span>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">Dr. Emma Stone</h3>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">Dr. Rajesh Sharma</h3>
                   <p className="text-xs text-slate-400 dark:text-slate-500">MPT (Orthopaedics) · 10+ Years Clinical Experience</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-5 gap-6 items-start">
-                  <div className="sm:col-span-2 relative h-56 rounded-2xl overflow-hidden shadow-md">
+                  <div className="sm:col-span-2 relative h-56 rounded-2xl overflow-hidden shadow-md bg-slate-100 dark:bg-neutral-800">
                     <img
-                      src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400"
-                      alt="Dr. Emma Stone"
-                      className="w-full h-full object-cover"
+                      src="/images/dr-rajesh.png"
+                      alt="Dr. Rajesh Sharma"
+                      className="w-full h-full object-cover object-[center_20%]"
                     />
                   </div>
 
                   <div className="sm:col-span-3 flex flex-col gap-4">
                     <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                      Dr. Emma Stone is a highly experienced orthopedic specialist who has successfully led teams in sports injury restorations and manual joint decompression methods.
+                      Dr. Rajesh Sharma is a highly experienced orthopedic specialist who has successfully led teams in sports injury restorations and manual joint decompression methods.
                     </p>
                     <ul className="flex flex-col gap-2">
                       {["Advanced Manual Therapy", "Sports Injury Specialist", "Post-Surgical Rehabilitation", "Pain Management Expert"].map((item) => (
@@ -127,7 +127,7 @@ export default function Home() {
                     </ul>
                     <Link href="/portal/book" className="mt-1">
                       <Button variant="primary" size="sm" icon={<ArrowRight className="h-4 w-4" />}>
-                        Book with Dr. Stone
+                        Book with Dr. Sharma
                       </Button>
                     </Link>
                   </div>
@@ -151,7 +151,7 @@ export default function Home() {
                 <div className="flex items-center justify-between border-t border-slate-100 dark:border-neutral-800 pt-4">
                   <div className="flex items-center gap-3">
                     <img
-                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100"
+                      src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100"
                       alt="Ramesh Patil"
                       className="h-10 w-10 rounded-full object-cover border-2 border-white dark:border-neutral-800 shadow"
                     />

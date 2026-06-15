@@ -6,23 +6,23 @@ import Container from "../layout/Container";
 const TESTIMONIALS = [
   {
     quote: "After suffering a severe hamstring tear during football, the sports injury rehabilitation program got me back on the field two weeks ahead of schedule. Truly elite care!",
-    author: "Sarah Jenkins",
+    author: "Priya Sharma",
     role: "Athlete",
-    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=80",
+    avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=80",
     rating: 5,
   },
   {
     quote: "The home visit physiotherapy care is spectacular. When my father was recovering from surgery, the therapist came straight to our house with portable analysis gear. Highly professional.",
-    author: "David Grey",
+    author: "Amit Kulkarni",
     role: "Patient's Family",
-    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=80",
+    avatar: "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&q=80&w=80",
     rating: 5,
   },
   {
     quote: "Persistent neck stiffness from office desktop work was completely cured in just 3 sessions of manual alignment. Outstanding range of motion recovery!",
-    author: "Jessica M.",
+    author: "Neha Joshi",
     role: "Software Architect",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=80",
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=80",
     rating: 5,
   },
 ];

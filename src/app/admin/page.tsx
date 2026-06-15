@@ -53,7 +53,7 @@ export default function AdminDashboardOverview() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-neutral-800 pb-5">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Dashboard Overview</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Welcome back, Dr. Emma Stone. Monitor active schedules and clinical performance.</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Welcome back, Dr. Rajesh Sharma. Monitor active schedules and clinical performance.</p>
         </div>
         <Link
           href="/admin/appointments"

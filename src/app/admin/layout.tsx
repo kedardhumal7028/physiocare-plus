@@ -67,12 +67,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         dark:from-blue-950/40 dark:to-[#0b469a]/5
         border border-blue-100 dark:border-blue-900/30">
         <img
-          src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=100"
-          alt="Dr. Emma Stone"
-          className="h-9 w-9 rounded-lg object-cover ring-2 ring-[#0b469a]/25 shrink-0"
+          src="/images/dr-rajesh.png"
+          alt="Dr. Rajesh Sharma"
+          className="h-9 w-9 rounded-lg object-cover ring-2 ring-[#0b469a]/25 shrink-0 object-top"
         />
         <div className="min-w-0">
-          <p className="text-[13px] font-bold text-slate-900 dark:text-white truncate">Dr. Emma Stone</p>
+          <p className="text-[13px] font-bold text-slate-900 dark:text-white truncate">Dr. Rajesh Sharma</p>
           <p className="text-[10px] font-semibold text-[#0b469a] dark:text-blue-400 uppercase tracking-wider mt-0.5">Administrator</p>
         </div>
       </div>
@@ -245,13 +245,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="flex items-center gap-2.5 pl-3 ml-1
               border-l border-slate-200 dark:border-white/[0.07]">
               <img
-                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=100"
-                alt="Dr. Emma Stone"
-                className="h-8 w-8 rounded-lg object-cover
+                src="/images/dr-rajesh.png"
+                alt="Dr. Rajesh Sharma"
+                className="h-8 w-8 rounded-lg object-cover object-top
                   ring-2 ring-[#0b469a]/20 dark:ring-blue-400/20"
               />
               <div className="hidden sm:block leading-none">
-                <p className="text-[13px] font-semibold text-slate-900 dark:text-white">Dr. Emma Stone</p>
+                <p className="text-[13px] font-semibold text-slate-900 dark:text-white">Dr. Rajesh Sharma</p>
                 <p className="text-[10px] text-[#0b469a] dark:text-blue-400 font-semibold mt-0.5">Admin</p>
               </div>
             </div>
