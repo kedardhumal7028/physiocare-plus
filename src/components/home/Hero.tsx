@@ -61,7 +61,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-500" />
               </span>
-              Pune&apos;s #1 Physiotherapy Clinic
+               #1 Physiotherapy Care
             </div>
 
             {/* Headline */}
@@ -81,11 +81,11 @@ export default function Hero() {
                   </span>
                 </span>
                 <br className="hidden md:block" />
-                {" "}Care in Pune
+                {" "}Care
               </h1>
 
               <p className="text-[14.5px] sm:text-[15px] text-foreground/70 leading-relaxed max-w-[460px] mx-auto md:mx-0 font-medium">
-                Personalized treatment plans, advanced techniques, and expert one-on-one care — helping you recover faster and live pain-free.
+                Don&apos;t have time to visit a clinic or want to know about your condition before consulting? Just one click—book an appointment and get directly connected to your personal physiotherapist.
               </p>
             </div>
 
