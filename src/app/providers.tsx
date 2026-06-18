@@ -2,6 +2,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { AuthProvider } from "./context/AuthContext";
 
 const ThemeContext = createContext({
   theme: "light",
@@ -32,7 +33,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      <AuthProvider>
+        {children}
+      </AuthProvider>
     </ThemeContext.Provider>
   );
 }
