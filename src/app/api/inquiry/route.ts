@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { randomUUID } from "crypto";
 import nodemailer from "nodemailer";
 import connectToDatabase from "@/lib/mongodb";
 import { InquiryModel } from "@/lib/models/Inquiry";
-
 const VALID_STATUSES = new Set(["new", "contacted", "resolved"]);
 
 type InquiryStatus = "new" | "contacted" | "resolved";
@@ -86,6 +86,7 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
 
     const inquiryInput = {
       name,
@@ -211,6 +212,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
+
     return NextResponse.json({ success: true, inquiry: newInquiry, storage: "mongodb" });
   } catch (error) {
     console.error("Inquiry API POST error:", error);
@@ -233,6 +235,7 @@ export async function PATCH(req: NextRequest) {
         { status: 400 }
       );
     }
+
 
     if (!isMongoConfigured()) {
       const store = getFallbackStore();
@@ -258,6 +261,7 @@ export async function PATCH(req: NextRequest) {
       { status },
       { new: true }
     );
+
 
     if (!updatedInquiry) {
       return NextResponse.json(
