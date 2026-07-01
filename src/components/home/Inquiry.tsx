@@ -56,12 +56,15 @@ export default function Inquiry() {
 
     setStatus("loading");
     try {
-      // 2. Send email via API route
-      await fetch("/api/inquiry", {
+      const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+
+      if (!res.ok) {
+        throw new Error("Failed to send inquiry");
+      }
 
       setStatus("success");
       setForm({ name: "", email: "", phone: "", subject: "", message: "" });

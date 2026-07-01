@@ -2,14 +2,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/footer";
 import WhatsAppCTA from "@/components/layout/whatsapp-cta";
 import Container from "@/components/layout/Container";
-import SectionTitle from "@/components/common/SectionTitle";
-import Button from "@/components/common/Button";
-import { Phone, Mail, MapPin, Send, CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { Phone, Mail, MapPin, Send, CheckCircle, ChevronDown, ChevronUp, AlertCircle } from "lucide-react";
 
 interface FAQItem {
   q: string;
@@ -24,6 +21,7 @@ export default function ContactPage() {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   // Accordion active index
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -35,12 +33,30 @@ export default function ContactPage() {
     { q: "Is home visit physiotherapy eligible for everyone?", a: "Home visit dispatches are available for patients requesting specialized mobility services or post-surgery recoveries located within 25km of our central clinic. Use the Distance Eligibility tool to check." }
   ];
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
+    setSubmitError("");
+
+    try {
+      const res = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          subject: "Contact Page Inquiry",
+          message,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to send inquiry");
+      }
+
       setIsSubmitting(false);
       setSubmitSuccess(true);
       setName("");
@@ -48,7 +64,10 @@ export default function ContactPage() {
       setPhone("");
       setMessage("");
       setTimeout(() => setSubmitSuccess(false), 5000);
-    }, 1500);
+    } catch {
+      setIsSubmitting(false);
+      setSubmitError("Something went wrong. Please try again.");
+    }
   };
 
   const toggleFaq = (index: number) => {
@@ -139,6 +158,13 @@ export default function ContactPage() {
                         className="w-full rounded-xl border border-brand-500/20 bg-background/50 p-3 outline-none focus:border-brand-500"
                       />
                     </div>
+
+                    {submitError && (
+                      <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-600 dark:border-red-800/30 dark:bg-red-900/10 dark:text-red-400">
+                        <AlertCircle className="h-4 w-4 shrink-0" />
+                        <p className="text-xs font-semibold">{submitError}</p>
+                      </div>
+                    )}
 
                     <button
                       type="submit"

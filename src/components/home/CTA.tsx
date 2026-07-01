@@ -38,11 +38,11 @@ export default function CTA() {
                   Book Consultation Slot
                 </Button>
               </Link>
-              <Link href="/services">
+              {/* <Link href="/services">
                 <Button variant="outline" size="lg" icon={<MapPin className="h-4.5 w-4.5 text-brand-500" />}>
                   Inquire Home Dispatch
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </div>
 
