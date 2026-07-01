@@ -203,7 +203,7 @@ export async function POST(req: NextRequest) {
           from: `"PhysioCare Plus" <${smtpUser}>`,
           to: handlerEmail,
           replyTo: email,
-          subject: \`New Inquiry: \${subject} - \${name}\`,
+          subject: `New Inquiry: ${subject} - ${name}`,
           html: htmlBody,
         });
       } catch (emailError) {
