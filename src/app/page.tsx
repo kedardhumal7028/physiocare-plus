@@ -16,19 +16,205 @@ import SectionTitle from "@/components/common/SectionTitle";
 import Button from "@/components/common/Button";
 import {
   Check, Quote, Star, ArrowRight,
-  ShieldCheck, Mail, MessageSquare, Monitor, LayoutGrid, Award
+  ShieldCheck, ClipboardCheck, ClipboardList, Dumbbell, GraduationCap,
+  CalendarCheck, Video, Target, Activity
 } from "lucide-react";
 
 /* ─────────────────────────────────────────────────────────────────── */
 
-const PLATFORM_FEATURES = [
-  { title: "Multi-Clinic Ready",     desc: "Manage multiple clinics and therapists seamlessly from one centralized platform.", icon: LayoutGrid },
-  { title: "Custom Branding",        desc: "Each clinic location retains its own visual identity, custom styling, and domains.", icon: Award },
-  { title: "SEO Optimized",          desc: "Built with bleeding-edge indexing frameworks and dynamic metadata capabilities.", icon: Monitor },
-  { title: "WhatsApp Integration",   desc: "One-click secure chat routing to patients and immediate dispatch coordinators.", icon: MessageSquare },
-  { title: "Email Notifications",    desc: "Automated, transactional email summaries for clinic bookings, EMR updates, and invoices.", icon: Mail },
-  { title: "Secure & Fast",          desc: "HIPAA-compliant data encryptions, secure sessions, and blazing-fast edge loads.", icon: ShieldCheck },
+const ONLINE_PHYSIO_STEPS = [
+  {
+    title: "Detailed Assessment & Consultation",
+    icon: ClipboardCheck,
+    items: [
+      "Discussion of symptoms, pain history, and functional limitations",
+      "Review of medical history, imaging reports, and previous treatments, if available",
+      "Movement and posture assessment through video consultation",
+      "Identification of contributing factors and treatment goals",
+    ],
+  },
+  {
+    title: "Personalized Treatment Plan",
+    icon: ClipboardList,
+    items: [
+      "Individualized rehabilitation program based on your condition",
+      "Evidence-based exercise prescription",
+      "Pain management and self-care strategies",
+      "Lifestyle and activity modification guidance",
+    ],
+  },
+  {
+    title: "Home Exercise Protocol",
+    icon: Dumbbell,
+    items: [
+      "Step-by-step exercise instructions",
+      "Exercise progression based on recovery",
+      "Mobility, strengthening, balance, and flexibility training as required",
+      "Digital exercise sheets or videos for reference",
+    ],
+  },
+  {
+    title: "Education & Prevention",
+    icon: GraduationCap,
+    items: [
+      "Understanding the cause of your symptoms",
+      "Ergonomic and posture advice",
+      "Injury prevention strategies",
+      "Long-term self-management guidance",
+    ],
+  },
+  {
+    title: "Follow-Up & Progress Monitoring",
+    icon: CalendarCheck,
+    items: [
+      "Regular review of symptoms and functional improvement",
+      "Program modifications based on progress",
+      "Ongoing support and clarification of exercises",
+      "Goal tracking to ensure optimal recovery",
+    ],
+  },
 ];
+
+const ONLINE_CONDITIONS = [
+  "Neck and back pain",
+  "Joint pain including shoulder, knee, hip, and ankle",
+  "Sports injuries",
+  "Post-operative rehabilitation",
+  "Posture-related problems",
+  "Arthritis and chronic pain conditions",
+  "Work-from-home and ergonomic issues",
+];
+
+const ONLINE_BENEFITS = [
+  "Consult from the comfort of your home",
+  "No travel or waiting time",
+  "Convenient scheduling",
+  "Personalized one-on-one care",
+  "Access to expert guidance regardless of location",
+];
+
+/* ─────────────────────────────────────────────────────────────────── */
+
+function OnlinePhysioSection() {
+  return (
+    <section className="py-8 md:py-10 bg-slate-50 dark:bg-neutral-950/50 border-t border-slate-100 dark:border-neutral-800/50">
+      <Container>
+        <SectionTitle
+          badge="Online Physiotherapy"
+          title="Platform Services for Guided Recovery at Home"
+          description="Our online physiotherapy sessions combine expert assessment, personalized rehabilitation planning, guided home exercises, education, and ongoing progress monitoring to help you recover safely and effectively from the comfort of your home."
+          className="mb-7"
+        />
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="glass-card p-5 border border-slate-200 dark:border-neutral-800 flex min-h-[260px] flex-col justify-between gap-5">
+            <div className="flex flex-col gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500/10 text-brand-500">
+                <Video className="h-5 w-5" />
+              </div>
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-brand-500">Remote Care Platform</span>
+                <h4 className="mt-1 text-base font-bold leading-snug text-slate-900 dark:text-white">
+                  Guided recovery from home
+                </h4>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                Expert assessment, personalized rehabilitation planning, guided exercises, education, and progress monitoring in one structured online care experience.
+              </p>
+            </div>
+          </div>
+
+          {ONLINE_PHYSIO_STEPS.map(({ title, items, icon: Icon }) => (
+            <div
+              key={title}
+              className="glass-card p-5 border border-slate-200 dark:border-neutral-800 hover:border-brand-500/40 hover:shadow-lg transition-all duration-300 flex min-h-[260px] flex-col gap-4 group"
+            >
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/30 text-brand-500 group-hover:bg-brand-500 group-hover:text-white transition-all duration-200">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h4 className="text-sm font-bold leading-snug text-slate-900 dark:text-white">{title}</h4>
+              </div>
+
+              <ul className="flex flex-col gap-2">
+                {items.map((item) => (
+                  <li key={item} className="flex gap-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                    <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* <div className="glass-card p-5 border border-slate-200 dark:border-neutral-800 flex min-h-[260px] flex-col">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500/10 text-brand-500">
+                <Activity className="h-5 w-5" />
+              </div> */}
+              {/* <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-brand-500">Conditions Managed Online</span>
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white">Common concerns we can assess and guide remotely</h4>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {ONLINE_CONDITIONS.map((condition) => (
+                <div key={condition} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                  <Target className="h-4 w-4 shrink-0 text-brand-500" />
+                  <span>{condition}</span>
+                </div>
+              ))}
+            </div> */}
+          {/* </div> */}
+
+          {/* <div className="glass-card p-5 border border-slate-200 dark:border-neutral-800 flex min-h-[260px] flex-col">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                <Video className="h-5 w-5" />
+              </div>
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-brand-500">Benefits</span>
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white">Care that fits your schedule</h4>
+              </div>
+            </div> */}
+            {/* <ul className="flex flex-col gap-2">
+              {ONLINE_BENEFITS.map((benefit) => (
+                <li key={benefit} className="flex gap-2 text-sm text-slate-600 dark:text-slate-300">
+                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div> */}
+
+          {/* <div className="glass-card p-5 border border-slate-200 dark:border-neutral-800 flex min-h-[260px] flex-col justify-between gap-5 bg-brand-50/40 dark:bg-brand-900/10">
+            <div className="flex flex-col gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500 text-white">
+                <ArrowRight className="h-5 w-5" />
+              </div>
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-brand-500">Start Online Care</span>
+                <h4 className="mt-1 text-base font-bold text-slate-900 dark:text-white">
+                  Get a recovery plan tailored to your goals
+                </h4>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                Book a video consultation so your therapist can assess movement, clarify symptoms, and guide the next step in your home program.
+              </p>
+            </div>
+            <Link
+              href="/portal/book"
+              className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-brand-500 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-brand-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-lg active:scale-98"
+            >
+              <span>Book Online Session</span>
+              <ArrowRight className="h-4 w-4 shrink-0" />
+            </Link>
+          </div> */}
+        </div>
+      </Container>
+    </section>
+  );
+}
 
 /* ─────────────────────────────────────────────────────────────────── */
 
@@ -143,7 +329,7 @@ export default function Home() {
                   </div>
                   <blockquote className="p-5 rounded-2xl bg-slate-50 dark:bg-neutral-900 border border-slate-100 dark:border-neutral-800">
                     <p className="text-sm text-slate-600 dark:text-slate-300 italic leading-relaxed">
-                      "Excellent treatment and highly personalized care. The manual joint alignments completely resolved my severe lumbar back stiffness in just 3 sessions. I highly recommend this clinic!"
+                      &quot;Excellent treatment and highly personalized care. The manual joint alignments completely resolved my severe lumbar back stiffness in just 3 sessions. I highly recommend this clinic!&quot;
                     </p>
                   </blockquote>
                 </div>
@@ -179,6 +365,8 @@ export default function Home() {
         */}
         <Services />
 
+        <OnlinePhysioSection />
+
         {/*
           ══════════════════════════════════════════════
           5. TESTIMONIALS  ← id="testimonials"  (set in Testimonials.tsx)
@@ -198,33 +386,6 @@ export default function Home() {
           7. PLATFORM FEATURES GRID
           ══════════════════════════════════════════════
         */}
-        {/* <section className="py-4 md:py-6 bg-slate-50 dark:bg-neutral-950/50 border-t border-slate-100 dark:border-neutral-800/50">
-          <Container>
-            <SectionTitle
-              badge="Clinic Core Tech"
-              title="Built for Premium Healthcare Operations"
-              description="A centralized medical suite designed to elevate therapist workflows and patient healing paths."
-              className="mb-6"
-            />
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {PLATFORM_FEATURES.map(({ title, desc, icon: Icon }) => (
-                <div
-                  key={title}
-                  className="glass-card p-5 border border-slate-200 dark:border-neutral-800 hover:border-brand-500/40 hover:shadow-lg transition-all duration-300 flex gap-4 group"
-                >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/30 text-brand-500 group-hover:bg-brand-500 group-hover:text-white transition-all duration-200">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <h4 className="text-sm font-bold text-slate-900 dark:text-white">{title}</h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Container>
-        </section> */}
-
         {/*
           ══════════════════════════════════════════════
           8. INQUIRY / CONTACT  ← id="contact"  (set in Inquiry.tsx)

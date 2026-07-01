@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   MessageSquare, Mail, Phone, Clock, Search, Filter,
@@ -18,6 +18,48 @@ export interface Inquiry {
   status: "new" | "contacted" | "resolved";
   createdAt: string;
   updatedAt: string;
+}
+
+type InquiryStatus = Inquiry["status"];
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function isInquiryStatus(value: unknown): value is InquiryStatus {
+  return value === "new" || value === "contacted" || value === "resolved";
+}
+
+function normalizeInquiries(payload: unknown): Inquiry[] {
+  const source = isRecord(payload)
+    ? payload.data ?? payload.inquiries ?? payload.inquiry ?? payload
+    : payload;
+  const items = Array.isArray(source) ? source : [source];
+  const inquiries: Inquiry[] = [];
+
+  for (const item of items) {
+    if (!isRecord(item)) continue;
+
+    const now = new Date().toISOString();
+    const id = String(item._id ?? item.id ?? "");
+    const message = String(item.message ?? "");
+
+    if (!id || !message) continue;
+
+    inquiries.push({
+      _id: id,
+      name: String(item.name ?? "Unknown Patient"),
+      email: String(item.email ?? ""),
+      phone: item.phone ? String(item.phone) : undefined,
+      subject: item.subject ? String(item.subject) : "General Inquiry",
+      message,
+      status: isInquiryStatus(item.status) ? item.status : "new",
+      createdAt: String(item.createdAt ?? now),
+      updatedAt: String(item.updatedAt ?? item.createdAt ?? now),
+    });
+  }
+
+  return inquiries;
 }
 
 const STATUS_CONFIG = {
@@ -76,26 +118,46 @@ export default function AdminInquiriesPage() {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [lastRefreshed, setLastRefreshed] = useState(new Date());
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [storageMode, setStorageMode] = useState<"mongodb" | "memory" | null>(null);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setIsLoading(true);
+    setLoadError(null);
     try {
-      const res = await fetch("/api/inquiry");
-      if (res.ok) {
-        const data = await res.json();
-        setInquiries(data);
+      const res = await fetch("/api/inquiry", { cache: "no-store" });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(
+          isRecord(data) && typeof data.error === "string"
+            ? data.error
+            : "Failed to load inquiries"
+        );
       }
+
+      setStorageMode(
+        isRecord(data) && data.storage === "memory" ? "memory" : "mongodb"
+      );
+      setInquiries(normalizeInquiries(data));
     } catch (error) {
       console.error("Failed to load inquiries:", error);
+      setInquiries([]);
+      setStorageMode(null);
+      setLoadError(error instanceof Error ? error.message : "Failed to load inquiries");
     } finally {
       setIsLoading(false);
       setLastRefreshed(new Date());
     }
-  };
+  }, []);
 
   useEffect(() => {
-    load();
-  }, []);
+    const timer = window.setTimeout(() => {
+      void load();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [load]);
 
   const handleStatusChange = async (id: string, status: Inquiry["status"]) => {
     setUpdatingId(id);
@@ -107,9 +169,12 @@ export default function AdminInquiriesPage() {
       });
       if (res.ok) {
         const data = await res.json();
-        setInquiries((prev) =>
-          prev.map((inq) => (inq._id === id ? data.inquiry : inq))
-        );
+        const [updatedInquiry] = normalizeInquiries(data);
+        if (updatedInquiry) {
+          setInquiries((prev) =>
+            prev.map((inq) => (inq._id === id ? updatedInquiry : inq))
+          );
+        }
       }
     } catch (error) {
       console.error("Failed to update status:", error);
@@ -215,6 +280,20 @@ export default function AdminInquiriesPage() {
           <span className="text-3xs font-bold text-emerald-600 dark:text-emerald-400">Database Active</span>
         </div>
       </div>
+
+      {storageMode === "memory" && (
+        <div className="flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-semibold text-amber-700 dark:border-amber-800/30 dark:bg-amber-900/10 dark:text-amber-400">
+          <AlertCircle className="h-4 w-4 shrink-0" />
+          <span>Local fallback is active because MongoDB is not configured. Messages will stay available until the dev server restarts.</span>
+        </div>
+      )}
+
+      {loadError && (
+        <div className="flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs font-semibold text-red-600 dark:border-red-800/30 dark:bg-red-900/10 dark:text-red-400">
+          <AlertCircle className="h-4 w-4 shrink-0" />
+          <span>{loadError}</span>
+        </div>
+      )}
 
       {/* ── KPI Cards ── */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
