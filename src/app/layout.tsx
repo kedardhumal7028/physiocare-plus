@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${outfit.variable} h-full antialiased`} suppressHydrationWarning>
-      <body className="min-h-full flex flex-col background text-foreground bg-grid-pattern">
+      <body className="min-h-full flex flex-col background text-foreground bg-grid-pattern" suppressHydrationWarning>
         <Providers>
           {children}
         </Providers>
