@@ -7,15 +7,16 @@ import Footer from "@/components/layout/footer";
 import WhatsAppCTA from "@/components/layout/whatsapp-cta";
 import Hero from "@/components/home/Hero";
 import Stats from "@/components/home/Stats";
-import Services from "@/components/home/Services";
+// import Services from "@/components/home/Services";
 import Testimonials from "@/components/home/Testimonials";
 import CTA from "@/components/home/CTA";
 import Inquiry from "@/components/home/Inquiry";
 import Container from "@/components/layout/Container";
 import SectionTitle from "@/components/common/SectionTitle";
 import Button from "@/components/common/Button";
+import PatientTestimonialCard from "@/components/home/PatientTestimonialCard";
 import {
-  Check, Quote, Star, ArrowRight,
+  Check, ArrowRight,
   ShieldCheck, ClipboardCheck, ClipboardList, Dumbbell, GraduationCap,
   CalendarCheck, Video, Target, Activity
 } from "lucide-react";
@@ -152,7 +153,7 @@ function OnlinePhysioSection() {
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500/10 text-brand-500">
                 <Activity className="h-5 w-5" />
               </div> */}
-              {/* <div>
+          {/* <div>
                 <span className="text-[11px] font-bold uppercase tracking-wider text-brand-500">Conditions Managed Online</span>
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white">Common concerns we can assess and guide remotely</h4>
               </div>
@@ -177,7 +178,7 @@ function OnlinePhysioSection() {
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white">Care that fits your schedule</h4>
               </div>
             </div> */}
-            {/* <ul className="flex flex-col gap-2">
+          {/* <ul className="flex flex-col gap-2">
               {ONLINE_BENEFITS.map((benefit) => (
                 <li key={benefit} className="flex gap-2 text-sm text-slate-600 dark:text-slate-300">
                   <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
@@ -287,7 +288,7 @@ export default function Home() {
                 <div className="flex flex-col gap-1">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-brand-500">Physiotherapy Specialist</span>
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white">Dr. Vishwajeet Jambure</h3>
-                  <p className="text-xs text-slate-400 dark:text-slate-500">MPT (Orthopaedics) · 10+ Years Clinical Experience</p>
+                  <p className="text-xs text-slate-400 dark:text-slate-500">MPT (Orthopaedics) · 2+ Years Clinical Experience</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-5 gap-6 items-start">
@@ -320,39 +321,18 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right: Patient testimonial */}
-              <div className="glass-card p-7 md:p-9 border border-slate-200 dark:border-neutral-800 shadow-lg flex flex-col justify-between gap-6">
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-brand-500">What Patients Say</span>
-                    <Quote className="h-7 w-7 text-brand-500/15" />
-                  </div>
-                  <blockquote className="p-5 rounded-2xl bg-slate-50 dark:bg-neutral-900 border border-slate-100 dark:border-neutral-800">
-                    <p className="text-sm text-slate-600 dark:text-slate-300 italic leading-relaxed">
-                      &quot;Excellent treatment and highly personalized care. The manual joint alignments completely resolved my severe lumbar back stiffness in just 3 sessions. I highly recommend this clinic!&quot;
-                    </p>
-                  </blockquote>
-                </div>
-
-                <div className="flex items-center justify-between border-t border-slate-100 dark:border-neutral-800 pt-4">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100"
-                      alt="Ramesh Patil"
-                      className="h-10 w-10 rounded-full object-cover border-2 border-white dark:border-neutral-800 shadow"
-                    />
-                    <div>
-                      <p className="text-sm font-bold text-slate-900 dark:text-white">Ramesh Patil</p>
-                      <p className="text-[10px] text-slate-400 font-medium">Back Pain Therapy · Pune</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                </div>
-              </div>
+              {/* Right: Patient testimonial — now a standalone reusable component */}
+              <PatientTestimonialCard
+                testimonial={{
+                  quote:
+                    "Excellent treatment and highly personalized care. The manual joint alignments completely resolved my severe lumbar back stiffness in just 3 sessions. I highly recommend this clinic!",
+                  name: "Ramesh Patil",
+                  meta: "Back Pain Therapy · Pune",
+                  avatarSrc:
+                    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100",
+                  rating: 5,
+                }}
+              />
 
             </div>
           </Container>
@@ -363,7 +343,7 @@ export default function Home() {
           4. SERVICES  ← id="services"  (set in Services.tsx)
           ══════════════════════════════════════════════
         */}
-        <Services />
+        {/* <Services /> */}
 
         <OnlinePhysioSection />
 

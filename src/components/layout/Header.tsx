@@ -7,19 +7,20 @@ import { useTheme } from "@/app/providers";
 import Container from "./Container";
 import { Sun, Moon, Menu, X, Activity, Phone, CalendarCheck, LayoutDashboard } from "lucide-react";
 
-const NAV_LINKS = [
-  { label: "Home",         id: "hero"         },
-  { label: "About",        id: "about"        },
-  { label: "Services",     id: "services"     },
-  { label: "Testimonials", id: "testimonials" },
-  { label: "Inquiry",      id: "contact"      },
+const NAV_ITEMS = [
+  { label: "Home", href: "/", isHash: true, id: "hero" },
+  { label: "Services", href: "/services", isHash: false, id: "" },
+  { label: "About", href: "/#about", isHash: true, id: "about" },
+  { label: "Testimonials", href: "/#testimonials", isHash: true, id: "testimonials" },
+  { label: "Inquiry", href: "/#contact", isHash: true, id: "contact" },
 ] as const;
 
 function scrollToSection(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 72;
   window.scrollTo({
-    top: el.getBoundingClientRect().top - 70,
+    top,
     behavior: "smooth",
   });
 }
@@ -27,7 +28,7 @@ function scrollToSection(id: string) {
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
-  const router   = useRouter();
+  const router = useRouter();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("hero");
@@ -43,7 +44,7 @@ export default function Header() {
   useEffect(() => {
     if (pathname !== "/") return;
 
-    const ids = NAV_LINKS.map((n) => n.id);
+    const ids = NAV_ITEMS.filter((item) => item.isHash && item.id).map((n) => n.id);
     const ratios = new Map<string, number>();
 
     const observer = new IntersectionObserver(
@@ -77,18 +78,17 @@ export default function Header() {
     [pathname, router]
   );
 
-  const isHome   = pathname === "/";
+  const isHome = pathname === "/";
   const isActive = (id: string) => isHome && activeId === id;
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-200 bg-background/95 backdrop-blur-md border-b border-card-border ${
-        scrolled ? "shadow-sm" : ""
-      }`}
+      className={`sticky top-0 z-50 w-full transition-all duration-200 bg-background/95 backdrop-blur-md border-b border-card-border ${scrolled ? "shadow-sm" : ""
+        }`}
     >
       <Container>
         <div className="flex h-[72px] items-center justify-between gap-4">
-          
+
           {/* LOGO */}
           <Link
             href="/"
@@ -109,29 +109,46 @@ export default function Header() {
           </Link>
 
           {/* DESKTOP NAV */}
+          {/* DESKTOP NAV */}
           <nav className="hidden md:flex items-center h-full gap-6 lg:gap-8" aria-label="Main navigation">
-            {NAV_LINKS.map(({ label, id }) => {
-              const active = isActive(id);
-              return (
-                <a
-                  key={id}
-                  href={`#${id}`}
-                  onClick={(e) => handleNavClick(e, id)}
-                  className={`relative flex items-center h-full text-[14px] font-medium transition-colors duration-200
-                    ${active ? "text-brand-600 dark:text-brand-400" : "text-foreground/70 hover:text-brand-600 dark:hover:text-brand-400"}`}
-                >
-                  {label}
-                  {active && (
-                    <span className="absolute bottom-0 left-0 w-full h-[3px] bg-[#0b469a] dark:bg-blue-400 rounded-t-sm" />
-                  )}
-                </a>
-              );
+            {NAV_ITEMS.map((item) => {
+              const active = item.isHash ? isActive(item.id) : pathname === item.href;
+              if (item.isHash) {
+                return (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.id)}
+                    className={`relative flex items-center h-full text-[14px] font-medium transition-colors duration-200
+                      ${active ? "text-brand-600 dark:text-brand-400" : "text-foreground/70 hover:text-brand-600 dark:hover:text-brand-400"}`}
+                  >
+                    {item.label}
+                    {active && (
+                      <span className="absolute bottom-0 left-0 w-full h-[3px] bg-[#0b469a] dark:bg-blue-400 rounded-t-sm" />
+                    )}
+                  </a>
+                );
+              } else {
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`relative flex items-center h-full text-[14px] font-medium transition-colors duration-200
+                      ${active ? "text-brand-600 dark:text-brand-400" : "text-foreground/70 hover:text-brand-600 dark:hover:text-brand-400"}`}
+                  >
+                    {item.label}
+                    {active && (
+                      <span className="absolute bottom-0 left-0 w-full h-[3px] bg-[#0b469a] dark:bg-blue-400 rounded-t-sm" />
+                    )}
+                  </Link>
+                );
+              }
             })}
           </nav>
 
           {/* RIGHT CONTROLS */}
           <div className="hidden md:flex items-center gap-4 shrink-0">
-            
+
             {/* Admin Panel */}
             <Link
               href="/admin"
@@ -195,27 +212,43 @@ export default function Header() {
 
       {/* MOBILE MENU */}
       <div
-        className={`md:hidden border-t border-card-border bg-background overflow-hidden transition-all duration-300 ease-in-out ${
-          menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`md:hidden border-t border-card-border bg-background overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <div className="px-4 py-4 flex flex-col gap-2">
-          {NAV_LINKS.map(({ label, id }) => {
-            const active = isActive(id);
-            return (
-              <a
-                key={id}
-                href={`#${id}`}
-                onClick={(e) => handleNavClick(e, id)}
-                className={`flex items-center px-4 py-3 rounded-lg text-[15px] font-medium transition-colors ${
-                  active
-                    ? "bg-brand-500/10 text-brand-600 dark:text-brand-400 font-semibold"
-                    : "text-foreground/80 hover:bg-foreground/5"
-                }`}
-              >
-                {label}
-              </a>
-            );
+          {NAV_ITEMS.map((item) => {
+            const active = item.isHash ? isActive(item.id) : pathname === item.href;
+            if (item.isHash) {
+              return (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.id)}
+                  className={`flex items-center px-4 py-3 rounded-lg text-[15px] font-medium transition-colors ${
+                    active
+                      ? "bg-brand-500/10 text-brand-600 dark:text-brand-400 font-semibold"
+                      : "text-foreground/80 hover:bg-foreground/5"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              );
+            } else {
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={`flex items-center px-4 py-3 rounded-lg text-[15px] font-medium transition-colors ${
+                    active
+                      ? "bg-brand-500/10 text-brand-600 dark:text-brand-400 font-semibold"
+                      : "text-foreground/80 hover:bg-foreground/5"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            }
           })}
 
           <div className="my-2 border-t border-slate-200 dark:border-neutral-800" />

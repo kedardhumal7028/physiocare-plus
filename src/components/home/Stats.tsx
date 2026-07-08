@@ -3,10 +3,10 @@ import { TrendingUp, ShieldCheck, Award, Home } from "lucide-react";
 import Container from "../layout/Container";
 
 const STATS = [
-  { value: "5,000+", label: "Patients Treated",  icon: TrendingUp,  color: "text-brand-500",   bg: "bg-blue-50 dark:bg-blue-950/30" },
-  { value: "12+ Yrs", label: "Experience",        icon: Award,       color: "text-amber-500",   bg: "bg-amber-50 dark:bg-amber-950/30" },
-  { value: "95%",     label: "Recovery Rate",     icon: ShieldCheck, color: "text-emerald-600", bg: "bg-emerald-50 dark:bg-emerald-950/30" },
-  { value: "Home",    label: "Visits Available",  icon: Home,        color: "text-violet-500",  bg: "bg-violet-50 dark:bg-violet-950/30" },
+  { value: "50+", label: "Patients Treated", icon: TrendingUp, color: "text-brand-500", bg: "bg-blue-50 dark:bg-blue-950/30" },
+  { value: "2+ Yrs", label: "Experience", icon: Award, color: "text-amber-500", bg: "bg-amber-50 dark:bg-amber-950/30" },
+  { value: "95%", label: "Recovery Rate", icon: ShieldCheck, color: "text-emerald-600", bg: "bg-emerald-50 dark:bg-emerald-950/30" },
+  { value: "Home", label: "Visits Available", icon: Home, color: "text-violet-500", bg: "bg-violet-50 dark:bg-violet-950/30" },
 ];
 
 export default function Stats() {
